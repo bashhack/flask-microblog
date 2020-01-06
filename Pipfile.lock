@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b769d06d76775901d6c8fac8ba40b5ee2fedaa4a5429d0b96c0c0ba01f84f831"
+            "sha256": "0bb339c0d9d07d03f8989556f9024deb2dcd31d64895a32fcc7634189da29ede"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -262,6 +262,15 @@
                 "sha256:ff3797f2f16bf9d17d53257612da84dd0758db33935777149b3334c01ff68865"
             ],
             "version": "==7.0.0"
+        },
+        "pyenchant": {
+            "hashes": [
+                "sha256:b9526fc2c5f1ba0637e50200b645a7c20fb6644dbc6f6322027e7d2fbf1084a5",
+                "sha256:e8000144e61551fcab9cd1b6fdccdded20e577e8d6d0985533f0b2b9c38fd952",
+                "sha256:fc31cda72ace001da8fe5d42f11c26e514a91fa8c70468739216ddd8de64e2a0"
+            ],
+            "index": "pypi",
+            "version": "==2.0.0"
         },
         "pyjwt": {
             "hashes": [
