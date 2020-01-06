@@ -60,3 +60,6 @@ dmypy.json
 
 # Translations
 *.mo
+
+# SQLite DB
+*.db
