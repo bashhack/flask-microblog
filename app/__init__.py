@@ -2,6 +2,7 @@ import logging
 import os
 from logging.handlers import SMTPHandler, RotatingFileHandler
 
+from elasticsearch import Elasticsearch
 from flask import Flask, current_app, request
 from flask_avatars import Avatars
 from flask_babel import Babel, lazy_gettext as _l
@@ -13,7 +14,6 @@ from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 
 from config import Config
-
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -30,6 +30,7 @@ avatars = Avatars()
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
+
     db.init_app(app)
     migrate.init_app(app, db)
     login.init_app(app)
@@ -38,6 +39,8 @@ def create_app(config_class=Config):
     moment.init_app(app)
     babel.init_app(app)
     avatars.init_app(app)
+
+    app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) if app.config['ELASTICSEARCH_URL'] else None
 
     from app.errors import bp as errors_bp
 

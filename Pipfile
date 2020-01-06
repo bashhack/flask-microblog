@@ -25,6 +25,7 @@ flask-babel = "==0.12.2"
 guess-language-spirit = "==0.5.3"
 requests = "==2.22.0"
 pyenchant = "==2.0.0"
+elasticsearch = "==7.1.0"
 
 [pipenv]
 allow_prereleases = true
