@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-01-06 00:51-0500\n"
+"POT-Creation-Date: 2020-01-07 21:05-0500\n"
 "PO-Revision-Date: 2020-01-05 19:40-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -100,7 +100,7 @@ msgstr "Votre mot de passe a été réinitialisé."
 msgid "About Me"
 msgstr "À propos de moi"
 
-#: app/main/forms.py:13 app/main/forms.py:30
+#: app/main/forms.py:13 app/main/forms.py:30 app/main/forms.py:48
 msgid "Submit"
 msgstr "Soumettre"
 
@@ -108,9 +108,13 @@ msgstr "Soumettre"
 msgid "Say something"
 msgstr "Dis quelquechose"
 
-#: app/main/forms.py:34 app/main/routes.py:176
+#: app/main/forms.py:34 app/main/routes.py:187
 msgid "Search"
 msgstr "Chercher"
+
+#: app/main/forms.py:46
+msgid "Message"
+msgstr ""
 
 #: app/main/routes.py:45
 msgid "Your post is now live!"
@@ -155,6 +159,14 @@ msgstr "Vous ne suivez pas %(username)s"
 msgid "Explore"
 msgstr "Explorer"
 
+#: app/main/routes.py:210
+msgid "Your message has been sent."
+msgstr ""
+
+#: app/main/routes.py:213
+msgid "Send Message"
+msgstr ""
+
 #: app/templates/404.html:4
 msgid "Not Found"
 msgstr "Introuvable"
@@ -163,12 +175,12 @@ msgstr "Introuvable"
 msgid "Back"
 msgstr "Retour"
 
-#: app/templates/_post.html:14
+#: app/templates/_post.html:16
 #, python-format
 msgid "%(username)s said %(when)s"
 msgstr "%(username)s a dit il y a %(when)s"
 
-#: app/templates/_post.html:24
+#: app/templates/_post.html:26
 msgid "Translate"
 msgstr "Traduire"
 
@@ -180,15 +192,19 @@ msgstr "Bienvenue à Microblog"
 msgid "Login"
 msgstr "S'identifier"
 
-#: app/templates/base.html:40
+#: app/templates/base.html:40 app/templates/messages.html:4
+msgid "Messages"
+msgstr ""
+
+#: app/templates/base.html:41
 msgid "Profile"
 msgstr "Profil"
 
-#: app/templates/base.html:41
+#: app/templates/base.html:42
 msgid "Logout"
 msgstr "Se déconnecter"
 
-#: app/templates/base.html:79
+#: app/templates/base.html:80
 msgid "Error: Could not contact server."
 msgstr "Erreur: impossible de contacter le serveur."
 
@@ -197,11 +213,11 @@ msgstr "Erreur: impossible de contacter le serveur."
 msgid "Hi, %(username)s!"
 msgstr "Salut, %(username)s!"
 
-#: app/templates/index.html:17 app/templates/user.html:35
+#: app/templates/index.html:17 app/templates/user.html:42
 msgid "Newer posts"
 msgstr "Messages plus récents"
 
-#: app/templates/index.html:22 app/templates/user.html:40
+#: app/templates/index.html:22 app/templates/user.html:47
 msgid "Older posts"
 msgstr "Messages plus anciens"
 
@@ -220,6 +236,14 @@ msgstr "Mot de passe oublié?"
 #: app/templates/login.html:15
 msgid "Click to Reset It"
 msgstr "Cliquez pour le réinitialiser"
+
+#: app/templates/messages.html:12
+msgid "Newer messages"
+msgstr ""
+
+#: app/templates/messages.html:17
+msgid "Older messages"
+msgstr ""
 
 #: app/templates/reset_password.html:5
 msgid "Reset Your Password"
@@ -241,20 +265,25 @@ msgstr "Résultats suivants"
 msgid "No results found"
 msgstr "Aucun résultat trouvé"
 
+#: app/templates/send_messages.html:5
+#, python-format
+msgid "Send message to %(recipient)s"
+msgstr ""
+
 #: app/templates/user.html:10
 msgid "User"
 msgstr "Utilisateur"
 
-#: app/templates/user.html:12
+#: app/templates/user.html:12 app/templates/user_popup.html:14
 msgid "Last seen on"
 msgstr "Vu pour la dernière fois le"
 
-#: app/templates/user.html:13
+#: app/templates/user.html:13 app/templates/user_popup.html:18
 #, python-format
 msgid "%(count)d followers"
 msgstr "%(count)d abonnés"
 
-#: app/templates/user.html:13
+#: app/templates/user.html:13 app/templates/user_popup.html:19
 #, python-format
 msgid "%(count)d following"
 msgstr "%(count)d abonnements"
@@ -263,11 +292,15 @@ msgstr "%(count)d abonnements"
 msgid "Edit your profile"
 msgstr "Modifier votre profil"
 
-#: app/templates/user.html:17
+#: app/templates/user.html:17 app/templates/user_popup.html:23
 msgid "Follow"
 msgstr "S'abonner"
 
-#: app/templates/user.html:19
+#: app/templates/user.html:19 app/templates/user_popup.html:27
 msgid "Unfollow"
 msgstr "Se désabonner"
+
+#: app/templates/user.html:24
+msgid "Send private message"
+msgstr ""
 
