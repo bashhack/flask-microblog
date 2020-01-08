@@ -114,7 +114,7 @@ msgstr "Chercher"
 
 #: app/main/forms.py:46
 msgid "Message"
-msgstr ""
+msgstr "Message"
 
 #: app/main/routes.py:45
 msgid "Your post is now live!"
@@ -161,11 +161,11 @@ msgstr "Explorer"
 
 #: app/main/routes.py:210
 msgid "Your message has been sent."
-msgstr ""
+msgstr "Votre message a été envoyé."
 
 #: app/main/routes.py:213
 msgid "Send Message"
-msgstr ""
+msgstr "Envoyer le message"
 
 #: app/templates/404.html:4
 msgid "Not Found"
@@ -194,7 +194,7 @@ msgstr "S'identifier"
 
 #: app/templates/base.html:40 app/templates/messages.html:4
 msgid "Messages"
-msgstr ""
+msgstr "Messages"
 
 #: app/templates/base.html:41
 msgid "Profile"
@@ -239,11 +239,11 @@ msgstr "Cliquez pour le réinitialiser"
 
 #: app/templates/messages.html:12
 msgid "Newer messages"
-msgstr ""
+msgstr "Messages plus récents"
 
 #: app/templates/messages.html:17
 msgid "Older messages"
-msgstr ""
+msgstr "Messages plus anciens"
 
 #: app/templates/reset_password.html:5
 msgid "Reset Your Password"
@@ -268,7 +268,7 @@ msgstr "Aucun résultat trouvé"
 #: app/templates/send_messages.html:5
 #, python-format
 msgid "Send message to %(recipient)s"
-msgstr ""
+msgstr "Envoyer un message à %(recipient)s"
 
 #: app/templates/user.html:10
 msgid "User"
@@ -302,5 +302,5 @@ msgstr "Se désabonner"
 
 #: app/templates/user.html:24
 msgid "Send private message"
-msgstr ""
+msgstr "Envoyer un message privé"
 
