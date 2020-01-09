@@ -1,3 +1,4 @@
+import json
 import logging
 from datetime import datetime
 from time import time
@@ -91,6 +92,7 @@ class User(UserMixin, db.Model):
         lazy="dynamic",
     )
     last_message_read_time = db.Column(db.DateTime)
+    notifications = db.relationship("Notification", backref="user", lazy="dynamic")
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -153,6 +155,12 @@ class User(UserMixin, db.Model):
             .count()
         )
 
+    def add_notification(self, name, data):
+        self.notifications.filter_by(name=name).delete()
+        notification = Notification(name=name, payload_json=json.dumps(data), user=self)
+        db.session.add(notification)
+        return notification
+
 
 class Post(SearchableMixin, db.Model):
     __searchable__ = ["body"]
@@ -176,6 +184,17 @@ class Message(db.Model):
 
     def __repr__(self):
         return f"<Message {self.body}>"
+
+
+class Notification(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    timestamp = db.Column(db.Float, index=True, default=time)
+    payload_json = db.Column(db.Text)
+
+    def get_data(self):
+        return json.loads(self.payload_json)
 
 
 db.event.listen(db.session, "before_commit", SearchableMixin.before_commit)
