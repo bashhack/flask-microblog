@@ -92,7 +92,7 @@ def edit_profile():
         current_user.about_me = form.about_me.data
         db.session.commit()
         flash(_("Your changes have been saved."))
-        return redirect(url_for("edit_profile"))
+        return redirect(url_for("main.edit_profile"))
     elif request.method == "GET":
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
@@ -255,3 +255,14 @@ def notifications():
             for notification in notifications
         ]
     )
+
+
+@bp.route("/export_posts")
+@login_required
+def export_posts():
+    if current_user.get_task_in_progress("export_posts"):
+        flash(_("An export task is currently in progress"))
+    else:
+        current_user.launch_task("export_posts", _("Exporting posts..."))
+        db.session.commit()
+    return redirect(url_for("main.user", username=current_user.username))
