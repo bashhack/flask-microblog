@@ -1,0 +1,78 @@
+version: "3"
+services:
+  rqworker:
+    build:
+      context: .
+    env_file:
+      - env-postgres.env
+      - env-flask.env
+    depends_on:
+      - redis
+    entrypoint: rq worker -u redis://redis:6379/0 microblog-tasks
+    links:
+      - redis
+    networks:
+      - microblog
+  redis:
+    image: redis:alpine
+    volumes:
+     - redisdata:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - microblog
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.1
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    networks:
+      - microblog
+  db:
+    image: postgres:11
+    env_file:
+      - env-postgres.env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    networks:
+      - microblog
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - db
+    env_file:
+      - env-pgadmin.env
+    ports:
+      - '5050:5050'
+    networks:
+      - microblog
+    links:
+      - db
+  flask:
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - env-postgres.env
+      - env-flask.env
+    ports:
+      - '5000:5000'
+      - '6900:6900'
+    networks:
+      - microblog
+networks:
+  microblog:
+    driver: 'bridge'
+volumes:
+  esdata:
+    driver: 'local'
+  redisdata:
+    driver: 'local'
