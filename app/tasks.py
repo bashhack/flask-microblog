@@ -48,13 +48,7 @@ def export_posts(user_id):
             recipients=[user.email],
             text_body=render_template("email/export_posts.txt", user=user),
             html_body=render_template("email/export_posts.html", user=user),
-            attachments=[
-                (
-                    "posts.json",
-                    "application/json",
-                    json.dumps({"posts": data}, indent=4),
-                )
-            ],
+            attachments=[(json.dumps({"posts": data}, indent=4), "application/json",)],
             sync=True,
         )
     except:
