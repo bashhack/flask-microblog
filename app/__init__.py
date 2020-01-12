@@ -1,6 +1,6 @@
 import logging
 import os
-from logging.handlers import SMTPHandler, RotatingFileHandler
+from logging.handlers import RotatingFileHandler, SMTPHandler
 
 import rq
 from elasticsearch import Elasticsearch
@@ -107,4 +107,4 @@ def get_locale():
 
 
 # Avoiding circular dependency conflict...
-from app import routes, models, errors
+from app import errors, models, routes

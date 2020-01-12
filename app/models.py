@@ -3,16 +3,17 @@ import logging
 from datetime import datetime
 from time import time
 
+
 import jwt
 import redis
 import rq
 from flask import current_app
 from flask_login import UserMixin
 from jwt import DecodeError
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
-from app import db, login, avatars
-from app.search import query_index, add_to_index, remove_from_index
+from app import avatars, db, login
+from app.search import add_to_index, query_index, remove_from_index
 
 
 class SearchableMixin(object):
@@ -95,6 +96,7 @@ class User(UserMixin, db.Model):
     )
     last_message_read_time = db.Column(db.DateTime)
     notifications = db.relationship("Notification", backref="user", lazy="dynamic")
+    tasks = db.relationship("Task", backref="user", lazy="dynamic")
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -203,6 +205,14 @@ class Message(db.Model):
 
 
 class Notification(db.Model):
+    """
+    Notification class
+
+    A SQLAlchemy model definition for a notification,
+    consisting of an (id, name, user_id, timestamp, and payload_json)
+
+    """
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), index=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
