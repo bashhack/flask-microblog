@@ -3,8 +3,6 @@ FROM python:3.8-slim-buster
 RUN adduser --disabled-login microblog
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV LC_ALL C.UTF-8
-ENV LANG C.UTF-8
 
 # Python, don't write bytecode!
 ENV PYTHONDONTWRITEBYTECODE 1
