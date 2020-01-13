@@ -1,6 +1,8 @@
+import base64
 import json
 import logging
-from datetime import datetime
+import os
+from datetime import datetime, timedelta
 from time import time
 
 
@@ -94,7 +96,7 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
-class User(PaginatedAPIMixin, UserMixin, db.Model):
+class User(UserMixin, PaginatedAPIMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
@@ -122,6 +124,8 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
     last_message_read_time = db.Column(db.DateTime)
     notifications = db.relationship("Notification", backref="user", lazy="dynamic")
     tasks = db.relationship("Task", backref="user", lazy="dynamic")
+    token = db.Column(db.String(32), index=True, unique=True)
+    token_expiration = db.Column(db.DateTime)
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -203,6 +207,25 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
 
     def get_task_in_progress(self, name):
         return Task.query.filter_by(name=name, user=self, complete=False).first()
+
+    def get_token(self, expires_in=3600):
+        now = datetime.utcnow()
+        if self.token and self.token_expiration > now + timedelta(seconds=60):
+            return self.token
+        self.token = base64.b64decode(os.urandom(24)).decode('utf-8')
+        self.token_expiration = now + timedelta(seconds=expires_in)
+        db.session.add(self)
+        return self.token
+
+    def revoke_token(self):
+        self.token_expiration = datetime.utcnow() - timedelta(seconds=1)
+
+    @staticmethod
+    def check_token(token):
+        user = User.query.filter_by(token=token).first()
+        if user is None or user.token_expiration < datetime.utcnow():
+            return None
+        return user
 
     def to_dict(self, include_email=False):
         data = {
