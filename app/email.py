@@ -14,16 +14,14 @@ def _send_email(client, sender, recipients, msg):
         response = client.send_raw_email(
             Source=sender,
             Destinations=recipients,
-            RawMessage={
-                'Data': msg.as_string(),
-            },
+            RawMessage={"Data": msg.as_string(),},
         )
         # Display an error if something goes wrong.
     except ClientError as e:
-        print(e.response['Error']['Message'])
+        print(e.response["Error"]["Message"])
     else:
         print("Email sent! Message ID:")
-        print(response['MessageId'])
+        print(response["MessageId"])
 
 
 def send_async_email(app, client, sender, recipients, msg):
@@ -51,20 +49,20 @@ def send_email(
     CHARSET = "utf-8"
 
     # Create a multipart/mixed parent container.
-    msg = MIMEMultipart('mixed')
+    msg = MIMEMultipart("mixed")
 
     # Add subject, from and to lines.
-    msg['Subject'] = subject
-    msg['From'] = sender
-    msg['To'] = ', '.join(recipients)
+    msg["Subject"] = subject
+    msg["From"] = sender
+    msg["To"] = ", ".join(recipients)
 
     # Create a multipart/alternative child container.
-    msg_body = MIMEMultipart('alternative')
+    msg_body = MIMEMultipart("alternative")
 
     # Encode the text and HTML content and set the character encoding. This step is
     # necessary if you're sending a message with characters outside the ASCII range.
-    textpart = MIMEText(text_body.encode(CHARSET), 'plain', CHARSET)
-    htmlpart = MIMEText(html_body.encode(CHARSET), 'html', CHARSET)
+    textpart = MIMEText(text_body.encode(CHARSET), "plain", CHARSET)
+    htmlpart = MIMEText(html_body.encode(CHARSET), "html", CHARSET)
 
     # Add the text and HTML parts to the child container.
     msg_body.attach(textpart)
@@ -79,16 +77,15 @@ def send_email(
         for idx, attachment in enumerate(attachments):
             data, mime_type = attachment
             part = MIMEApplication(data)
-            part.add_header(
-                "Content-Disposition", "attachment", filename=f"posts.json"
-            )
+            part.add_header("Content-Disposition", "attachment", filename=f"posts.json")
             msg.attach(part)
 
     if sync:
         _send_email(ses, sender, recipients, msg)
     else:
         Thread(
-            target=send_async_email, args=(current_app._get_current_object(), sender, recipients, msg)
+            target=send_async_email,
+            args=(current_app._get_current_object(), sender, recipients, msg),
         ).start()
 
     # Just a simple email - no attachments
@@ -103,4 +100,3 @@ def send_email(
     #         }
     #     }
     # )
-
