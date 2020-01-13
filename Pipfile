@@ -37,7 +37,7 @@ rq = "==1.2.0"
 flask-avatars = "==0.2.2"
 guess-language-spirit = "==0.5.3"
 pyenchant = "==2.0.0"
-flask-httpauth = "*"
+flask-httpauth = "==3.3.0"
 
 [pipenv]
 allow_prereleases = true

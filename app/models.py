@@ -212,7 +212,7 @@ class User(UserMixin, PaginatedAPIMixin, db.Model):
         now = datetime.utcnow()
         if self.token and self.token_expiration > now + timedelta(seconds=60):
             return self.token
-        self.token = base64.b64decode(os.urandom(24)).decode('utf-8')
+        self.token = base64.b64encode(os.urandom(24)).decode('utf-8')
         self.token_expiration = now + timedelta(seconds=expires_in)
         db.session.add(self)
         return self.token
@@ -237,9 +237,9 @@ class User(UserMixin, PaginatedAPIMixin, db.Model):
             "follower_count": self.followers.count(),
             "followed_count": self.followed.count(),
             "_links": {
-                "self": url_for("api.get_user", id=self.id),
-                "followers": url_for("api.get_followers", id=self.id),
-                "followed": url_for("api.get_followed", id=self.id),
+                "self": url_for("api.get_user", user_id=self.id),
+                "followers": url_for("api.get_followers", user_id=self.id),
+                "followed": url_for("api.get_followed", user_id=self.id),
             },
         }
         if include_email:
